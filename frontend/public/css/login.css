@@ -1,0 +1,106 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 0%;
+}
+
+#login-container
+{
+    display: flex;
+    justify-content: center; /* Horizontal alignment */
+    align-items: center;    /* Vertical alignment */
+    width: fit-content;
+    margin-top: 5rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+    
+}
+
+.navbar {
+    width: 100%;
+    height: max-content;
+    top: 0;
+    position: sticky;
+    background-color: #bbb;
+}
+
+
+#login-window {
+    background-color: #fff;
+    /* border-radius: 1rem; */
+    /* box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2); */
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 20rem;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+#signup-window {
+    background-color: #fff;
+    /* border-radius: 1rem; */
+    /* box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2); */
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 20rem;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+    text-align: left;
+    font-weight: bold;
+}
+
+input {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.75rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    border: 0.1rem solid #bbb;
+    border-radius: 0.2rem;
+}
+
+button {
+    display: block;
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    /* box-sizing: border-box; */
+    /* border: 0.2rem solid #bbb; */
+    border-radius: 0.2rem;
+    background-color: #07383e;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+}
+
+ul {
+    background-color: #dddddd;
+    color: #07383e;    
+}
+
+li {
+    display: inline;
+    float: left;
+}
+
+a {
+    display: block;
+    padding: 0.4rem;
+}
+
+#signup-btn {
+    margin: auto;
+    width: 50%;
+}
