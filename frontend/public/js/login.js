@@ -15,7 +15,6 @@ function delete_cookie(name) {
 
 onLogin = async (event) => {
     event.preventDefault();
-    console.log("got here");
     const url = 'http://localhost:5000/login';
     const data = {
         "email": "user@example.com", 
@@ -48,9 +47,17 @@ onSignUp = async (event) => {
     event.preventDefault();
     console.log("got here");
     const url = 'http://localhost:5000/tmp';
+    const psw = document.getElementById("password").value;
+    const rpt_psw = document.getElementById("rpt_password");
+    console.log(rpt_psw.value);
+    if (psw !== rpt_psw.value) {
+      rpt_psw.classList.add("error");
+      document.getElementById("rpt_password_error").style = "block";
+    }
     const data = {
-        email: "test@tmp123",
-        name: "Gustav"
+        email: document.getElementById("email").value,
+        name: document.getElementById("username").value,
+        password: psw
     };
     try {
         const response = await fetch(url, {

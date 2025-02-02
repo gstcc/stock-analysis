@@ -6,7 +6,7 @@ body {
     margin-top: 0%;
 }
 
-#login-container
+#register-container
 {
     display: flex;
     justify-content: center; /* Horizontal alignment */
@@ -18,25 +18,13 @@ body {
     
 }
 
-#login-window {
-    background-color: #fff;
-    /* border-radius: 1rem; */
-    /* box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2); */
-    padding-left: 1rem;
-    padding-right: 1rem;
-    width: 20rem;
-    text-align: center;
-    margin-top: 2rem;
-    margin-bottom: 1.5rem;
-}
-
 #signup-window {
     background-color: #fff;
     /* border-radius: 1rem; */
     /* box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2); */
     padding-left: 1rem;
     padding-right: 1rem;
-    width: 20rem;
+    width: 25rem;
     text-align: center;
     margin-top: 2rem;
     margin-bottom: 1.5rem;

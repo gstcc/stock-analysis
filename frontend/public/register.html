@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/login.css"/>
+    <link rel="stylesheet" href="css/register.css"/>
     <link rel="stylesheet" href="css/global.css"/>
     <script src="js/login.js" defer></script>
-    <title>Login</title>
+    <script src="js/register.js" defer></script>
+    <title>Document</title>
 </head>
 <body>
     <div class="navbar">
@@ -17,25 +18,21 @@
             <li><a href="about.asp">About</a></li>
         </ul>
     </div>
-    <div id="login-container">
-        <div id="login-window">
-            <h3>Login Here</h3>
-            <form onsubmit="onLogin(event)">
+    <div id="register-container">
+        <div id="signup-window">
+            <h3>Signup</h3>
+            <form onsubmit="onSignUp(event)">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" placeholder="Enter your username" required>
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <label for="rpt-password">Password:</label>
+                <input type="password" id="rpt_password" name="rpt_password" placeholder="Repeat your password" required>
+                <div id="rpt_password_error" class="error-message" style="display: none;">Passwords must match.</div>
                 <div class="wrap">
                     <button type="submit">Submit</button>
-                </div>
-            </form>
-        </div>
-        <div id="signup-window">
-            <h3>Signup</h3>
-            <form action="/register" method="get">
-                <p>Don't have an account yet? Sign up today to access exclusive features, stay updated with the latest news, and enjoy a personalized experience tailored just for you!</p>
-                <div id="signup-btn">
-                    <button type="submit">Sign Up Here</button>
                 </div>
             </form> 
         </div>
