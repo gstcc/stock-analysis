@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="css/login.css"/>
     <script src="js/login.js" defer></script>
     <title>Login</title>
 </head>
@@ -19,7 +19,7 @@
     <div id="login-container">
         <div id="login-window">
             <h3>Login Here</h3>
-            <form>
+            <form onsubmit="onLogin(event)">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" placeholder="Enter your username" required>
                 <label for="password">Password:</label>

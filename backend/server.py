@@ -11,8 +11,8 @@ load_dotenv()
 
 
 app = Flask(__name__)
-CORS(app)
 app.config['JWT_KEY'] = os.getenv('JWT_KEY')
+CORS(app)
 
 
 def generate_token(user_id):
