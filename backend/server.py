@@ -6,9 +6,9 @@ import jwt
 import datetime
 import os
 from dotenv import load_dotenv
+import requests
 
 load_dotenv()
-
 
 app = Flask(__name__)
 app.config['JWT_KEY'] = os.getenv('JWT_KEY')
@@ -23,11 +23,6 @@ def generate_token(user_id):
     }
     token = jwt.encode(payload, app.config['JWT_KEY'], algorithm="HS256")
     return token
-
-@app.route('/tmp', methods=["POST"])
-def tmp():
-    data = request.json
-    return jsonify({"success" : True}), 200
 
 def connect_to_db():
     try:
@@ -44,15 +39,17 @@ def register_user():
     data = request.json
     email = data.get("email")
     pw = data.get("password")
-    usr = data.get("usr_name")
-    print(pw)
+    usr = data.get("user")
     hashed_password = generate_password_hash(pw)
     try:
         mycursor = mydb.cursor()
         mycursor.execute("INSERT INTO users (email, password, user) VALUES (%s, %s, %s)", (email, hashed_password, usr))
         mydb.commit()
         print(f"User {email} registered successfully!")
-        return jsonify({"success": True, "message": "User successfully created"}), 201
+        mycursor.execute("SELECT id FROM users WHERE email = %s", (email,))
+        result = mycursor.fetchone()
+        token = generate_token(result[0])
+        return jsonify({"success": True, "message": "User successfully created", "token": token}), 201
     except Exception as e:
         print(f"Error: {str(e)}")
         return jsonify({"success": False, "message": e}), 400
@@ -79,7 +76,14 @@ def login_user():
         return jsonify({"success": False, "message": "Invalid credentials"}), 401
 
 
+#Example
+def tmp():
+    api_key = os.getenv("API_KEY")
+    url = f'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey={api_key}'
+    r = requests.get(url)
+    data = r.json()
 
+    print(data)
 
 if __name__ == '__main__':
     connect_to_db()

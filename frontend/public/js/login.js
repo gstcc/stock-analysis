@@ -34,6 +34,7 @@ onLogin = async (event) => {
             const data = await response.json();
             bake_cookie("token", data.token);
             console.log('User logged in successfully:', data);
+            window.location.href = "/home";
           } else {
             const error = await response.json();
             console.error('Error:', error);
@@ -44,9 +45,9 @@ onLogin = async (event) => {
 };
 
 onSignUp = async (event) => {
-    event.preventDefault();
+  event.preventDefault();
     console.log("got here");
-    const url = 'http://localhost:5000/tmp';
+    const url = 'http://localhost:5000/register';
     const psw = document.getElementById("password").value;
     const rpt_psw = document.getElementById("rpt_password");
     console.log(rpt_psw.value);
@@ -56,7 +57,7 @@ onSignUp = async (event) => {
     }
     const data = {
         email: document.getElementById("email").value,
-        name: document.getElementById("username").value,
+        user: document.getElementById("username").value,
         password: psw
     };
     try {
@@ -71,12 +72,14 @@ onSignUp = async (event) => {
           if (response.ok) {
             const data = await response.json();
             console.log('User registered successfully:', data);
+            bake_cookie("token", data.token);
+            window.location.href = "/home";
           } else {
             const error = await response.json();
             console.error('Error:', error);
           }
     } catch(err) {
-        console.log(err);
+      console.log(err);
     }
 };
 

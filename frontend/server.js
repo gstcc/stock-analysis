@@ -8,7 +8,7 @@ function authenticateToken(req, res, next) {
     if (!token) {
         return res.redirect('/login'); // If no token, redirect to login
     }
-    jwt.verify(token, 'your-secret-key', (err, user) => {
+    jwt.verify(token, 'SUPER_SECRET', (err, user) => {
         if (err) {
             return res.redirect('/login'); // Invalid token, redirect to login
         }
@@ -21,10 +21,16 @@ function authenticateToken(req, res, next) {
 // Serve static files in the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/protected', authenticateToken, (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+/*
+* Protected sites should only be accessible when logged in
+*/
+app.get('/home', authenticateToken, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'home.html'));
 });
 
+/*
+* No token required
+*/
 app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'register.html'));
 })
@@ -34,7 +40,7 @@ app.get('/login', (req, res) => {
 })
 
 // Default route
-app.get('/', authenticateToken, (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
