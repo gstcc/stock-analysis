@@ -7,8 +7,10 @@ import datetime
 import os
 from dotenv import load_dotenv
 import requests
+from pathlib import Path
 
-load_dotenv()
+env_path = Path('../.env')
+load_dotenv(dotenv_path=env_path)
 
 app = Flask(__name__)
 app.config['JWT_KEY'] = os.getenv('JWT_KEY')
@@ -23,6 +25,16 @@ def generate_token(user_id):
     }
     token = jwt.encode(payload, app.config['JWT_KEY'], algorithm="HS256")
     return token
+
+def get_user_from_token(token):
+    try:
+        payload = jwt.decode(token, app.config['JWT_KEY'], algorithms=["HS256"])
+        user_id = payload.get("user_id")
+        return {"success" : True, "user_id": user_id}
+    except jwt.ExpiredSignatureError:
+        return {"success" : False, "error": "Token has expired"}
+    except jwt.InvalidTokenError:
+        return {"success" : False, "error": "Invalid token"}
 
 def connect_to_db():
     try:
@@ -46,8 +58,9 @@ def register_user():
         mycursor.execute("INSERT INTO users (email, password, user) VALUES (%s, %s, %s)", (email, hashed_password, usr))
         mydb.commit()
         print(f"User {email} registered successfully!")
-        mycursor.execute("SELECT id FROM users WHERE email = %s", (email,))
+        mycursor.execute("SELECT id FROM users WHERE email = %s", (email))
         result = mycursor.fetchone()
+        mycursor.execute("INSERT INTO userStocks (id) VALUES (%s)", (result[0])) #Also insert user to keep track of their stocks
         token = generate_token(result[0])
         return jsonify({"success": True, "message": "User successfully created", "token": token}), 201
     except Exception as e:
@@ -75,6 +88,20 @@ def login_user():
     else:
         return jsonify({"success": False, "message": "Invalid credentials"}), 401
 
+@app.route("/home", methods=["GET"])
+def home():
+    if 'token' in request.cookies:
+        token = request.cookies.token
+        msg = get_user_from_token(token)
+        if (msg.success):
+            mycursor = mydb.cursor()
+            mycursor.execute("SELECT stocks FROM userStocks WHERE id = %s", (msg.user_id))
+            result = mycursor.fetchall()
+            print(result)
+        else:
+            return jsonify({"success": False, "message": "Invalid credentials"}), 401
+    else:
+        return jsonify({"success": False, "message": "Invalid credentials"}), 401
 
 #Example
 def tmp():

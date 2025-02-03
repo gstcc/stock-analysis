@@ -13,6 +13,10 @@ function delete_cookie(name) {
     document.cookie = [name, '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; path=/; domain=.', window.location.hostname.toString()].join('');
 }
 
+moveToRegister = () => {
+  window.location.href = "/register";
+}
+
 onLogin = async (event) => {
     event.preventDefault();
     const url = 'http://localhost:5000/login';

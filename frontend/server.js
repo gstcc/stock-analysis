@@ -1,15 +1,21 @@
 const express = require('express');
-const app = express();
 const path = require('path');
 const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+require('dotenv').config({ path: '../.env' });
+
+const app = express();
+app.use(cookieParser());
 
 function authenticateToken(req, res, next) {
-    const token = req.headers['authorization']?.split(' ')[1];
+    const token = req.cookies.token;
+    console.log(token);
     if (!token) {
         return res.redirect('/login'); // If no token, redirect to login
     }
-    jwt.verify(token, 'SUPER_SECRET', (err, user) => {
+    jwt.verify(token, process.env.JWT_KEY, (err, user) => {
         if (err) {
+            console.log("Error: ", err);
             return res.redirect('/login'); // Invalid token, redirect to login
         }
         req.user = user; 
